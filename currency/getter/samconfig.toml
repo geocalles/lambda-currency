@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "lambda-getter"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-cmenc58661tg"
+s3_prefix = "lambda-getter"
+region = "us-east-1"
+profile = "AWSAdministratorAccess-897420120792"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = ["GetterFunction=897420120792.dkr.ecr.us-east-1.amazonaws.com/lambdaupdater14694c1a/getterfunction78c32005repo"]

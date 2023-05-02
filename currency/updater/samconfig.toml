@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "lambda-updater"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-cmenc58661tg"
+s3_prefix = "lambda-updater"
+region = "us-east-1"
+profile = "AWSAdministratorAccess-897420120792"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = ["UpdaterFunction=897420120792.dkr.ecr.us-east-1.amazonaws.com/lambdaupdater14694c1a/updaterfunction78c32005repo"]

@@ -1,0 +1,54 @@
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: updater-lambda
+    Description: multi-currency
+    Author: fbodev
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: LICENSE.txt
+    ReadmeUrl: README.md
+    Labels: ['tests']
+    HomePageUrl: https://fishbowlonline.com
+    SemanticVersion: 0.0.1
+    SourceCodeUrl: https://fishbowlonline.co,
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  fbo-lambdas
+  
+  SAM Template for fbo-lambdas
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 256
+
+Resources:
+  UpdaterFunction:
+    Type: AWS::Serverless::Function
+    Runtime: java11-maven-v1
+    Properties:
+      PackageType: Image
+      Architectures:
+        - x86_64
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            # https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html
+            # This event runs every Friday at 16 UTC
+            Schedule: cron(0 16 ? * FRI *)
+            Description: Lambda function scheduled with SAM
+            Enabled: True
+      Environment:
+        Variables:
+          REDIS_HOST: 'host.docker.internal'
+          REDIS_PORT: 6379
+          REDIS_DB: '0'
+          REDIS_COUNTRY_KEY: 'key-countries'
+          REDIS_CURRENCY_KEY: 'key-currencies'
+    Metadata:
+      DockerTag: java11-maven-v1
+      DockerContext: ./UpdaterFunction
+      Dockerfile: Dockerfile
